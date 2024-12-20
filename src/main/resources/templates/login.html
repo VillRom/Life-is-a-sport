@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Life is a sport</title>
+</head>
+
+<body>
+<h1>Login</h1>
+<img th:src="@{/images/Logo.jpg}"/>
+
+<div th:if="${error}">
+  Не удается войти в систему. Проверьте свое имя пользователя и пароль.
+</div>
+
+<p>Впервые у нас? Кликните
+  <a th:href="@{/register}">здесь</a> для регистрации.</p>
+
+<!-- tag::thAction[] -->
+<form method="POST" th:action="@{/login}" id="loginForm">
+  <!-- end::thAction[] -->
+  <label for="username">Username: </label>
+  <input type="text" name="username" id="username" /><br/>
+
+  <label for="password">Password: </label>
+  <input type="password" name="password" id="password" /><br/>
+
+  <input type="submit" value="Login"/>
+</form>
+</body>
+</html>

@@ -6,30 +6,27 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "users")
+@NoArgsConstructor(access=AccessLevel.PUBLIC, force=true)
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private final String userName;
-    private final String password;
-    private final String role;
-    private final String phoneNumber;
+    private String username;
+    private String password;
+    private String phoneNumber;
 
-    public User(String userName, String password, String role, String phoneNumber) {
-        this.userName = userName;
+    /*public User(String userName, String password, String phoneNumber) {
+        this.username = userName;
         this.password = password;
-        this.role = role;
         this.phoneNumber = phoneNumber;
-    }
+    }*/
 
     @Override
     public boolean isAccountNonExpired() {
@@ -53,15 +50,27 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

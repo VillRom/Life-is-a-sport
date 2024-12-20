@@ -23,8 +23,10 @@ public class LifeIsASportApplication {
     public ApplicationRunner dataLoader(UserRepository userRepo, CategoryRepository categRepo,
                                         EventRepository eventRepo, PasswordEncoder encoder) {
         return args -> {
-            User user = new User("vill", encoder.encode("password"),
-                    "ROLE_ADMIN","+79876543457");
+            User user = new User();
+            user.setUsername("vill");
+            user.setPassword(encoder.encode("password"));
+            user.setPhoneNumber("+79876543457");
             userRepo.save(user);
             Category category = new Category("Футбол");
             categRepo.save(category);

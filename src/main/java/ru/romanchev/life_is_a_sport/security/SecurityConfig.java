@@ -11,16 +11,25 @@ import org.springframework.security.web.SecurityFilterChain;
 import ru.romanchev.life_is_a_sport.user.User;
 import ru.romanchev.life_is_a_sport.user.UserRepository;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 public class SecurityConfig {
+
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
             throws Exception {
         return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-                authorizationManagerRequestMatcherRegistry.anyRequest().authenticated())
-                .formLogin(withDefaults()).build();
+                authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("/events").hasRole("USER"))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/**").permitAll())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login"))
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/"))
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**"))
+                .build();
     }
 
     @Bean
