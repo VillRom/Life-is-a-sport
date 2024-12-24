@@ -24,14 +24,21 @@ public class LifeIsASportApplication {
                                         EventRepository eventRepo, PasswordEncoder encoder) {
         return args -> {
             User user = new User();
-            user.setUsername("vill");
+            user.setUsername("villatic");
             user.setPassword(encoder.encode("password"));
             user.setPhoneNumber("+79876543457");
             userRepo.save(user);
-            Category category = new Category("Футбол");
+            Category category = new Category();
+            category.setName("Футбол");
             categRepo.save(category);
-            eventRepo.save(new Event("Игра 5х5", category, user,
-                    false, 15, EnumState.CREATED));
+            Event event = new Event();
+            event.setCategory(category);
+            event.setPaidEvent(false);
+            event.setState(EnumState.CREATED);
+            event.setDescription("Игра 5х5");
+            event.setParticipantLimit(15);
+            event.setUserCreated(user);
+            eventRepo.save(event);
         };
     }
 }

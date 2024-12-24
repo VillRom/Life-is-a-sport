@@ -7,29 +7,67 @@ import ru.romanchev.life_is_a_sport.user.User;
 
 @Data
 @Entity
-@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private final String description;
+    private String description;
     @ManyToOne
-    private final Category category;
+    private Category category;
     @ManyToOne
-    private final User userCreated;
-    private final Boolean paidEvent;
-    private final Integer participantLimit;
+    private User userCreated;
+    private Boolean paidEvent;
+    private Integer participantLimit;
     @Enumerated
-    private final EnumState state;
+    private EnumState state;
 
-    public Event(String description, Category category, User userCreated, Boolean paidEvent, Integer participantLimit,
-                 EnumState state) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUserCreated() {
+        return userCreated;
+    }
+
+    public void setUserCreated(User userCreated) {
         this.userCreated = userCreated;
+    }
+
+    public Boolean getPaidEvent() {
+        return paidEvent;
+    }
+
+    public void setPaidEvent(Boolean paidEvent) {
         this.paidEvent = paidEvent;
+    }
+
+    public Integer getParticipantLimit() {
+        return participantLimit;
+    }
+
+    public void setParticipantLimit(Integer participantLimit) {
         this.participantLimit = participantLimit;
+    }
+
+    public EnumState getState() {
+        return state;
+    }
+
+    public void setState(EnumState state) {
         this.state = state;
     }
 }

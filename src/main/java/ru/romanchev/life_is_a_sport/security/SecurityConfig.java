@@ -1,7 +1,10 @@
 package ru.romanchev.life_is_a_sport.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +17,8 @@ import ru.romanchev.life_is_a_sport.user.UserRepository;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
@@ -44,5 +49,14 @@ public class SecurityConfig {
             if (user != null) return user;
             throw new UsernameNotFoundException("Пользователь '" + username + "' не найден");
         };
+    }
+
+    @Bean
+    @Primary
+    public AuthenticationManagerBuilder authManager(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+        return auth;
     }
 }
