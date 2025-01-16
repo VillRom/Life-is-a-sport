@@ -13,6 +13,8 @@ import ru.romanchev.life_is_a_sport.event.EventRepository;
 import ru.romanchev.life_is_a_sport.user.User;
 import ru.romanchev.life_is_a_sport.user.UserRepository;
 
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 public class LifeIsASportApplication {
 
@@ -38,6 +40,8 @@ public class LifeIsASportApplication {
             event.setDescription("Игра 5х5");
             event.setParticipantLimit(15);
             event.setUserCreated(user);
+            event.setStart(LocalDateTime.now());
+            event.setEnd(event.getStart().plusDays(4));
             eventRepo.save(event);
         };
     }

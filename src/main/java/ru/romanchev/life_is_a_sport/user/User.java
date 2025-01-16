@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access=AccessLevel.PUBLIC, force=true)
-@RequiredArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +20,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String phoneNumber;
-
-    /*public User(String userName, String password, String phoneNumber) {
-        this.username = userName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-    }*/
 
     @Override
     public boolean isAccountNonExpired() {
@@ -51,26 +44,5 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

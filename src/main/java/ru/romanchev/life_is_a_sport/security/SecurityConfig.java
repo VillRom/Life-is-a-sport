@@ -25,7 +25,7 @@ public class SecurityConfig {
             throws Exception {
         return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/events").hasRole("USER"))
+                        .requestMatchers("/events", "/users", "/events/**", "/users/**").hasRole("USER"))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/**").permitAll())
                 .formLogin(formLogin -> formLogin
